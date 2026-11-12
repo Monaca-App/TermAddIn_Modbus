@@ -41,6 +41,8 @@ VBA マクロを一切記述することなく、 **標準の `.xlsx`（マク�
    * 読み出したワードデータやビット列をスカラー変数（`$VAR`）へのカンマ区切り格納、または配列（`#ARR`）への自動インデックス展開に対応。Excel シートの複数セルへ一括流し込みが可能。
 5. **Excel 32bit / 64bit 完全動作マトリクス**
    * .NET Framework 標準のマネージド通信基盤およびソケット通信スタックを採用しており、外部の専用ネイティブ DLL に依存しないため、Excel 32bit 版および 64bit 版の双方で制限なく完全動作。
+6. **実機・ドライバ不要の Modbus RTU / ASCII 折り返し検証 ＆ HEX 電文モニター連携（`c2c` 対応）**
+   * 公式無償ツール **[c2c](https://github.com/Monaca-App/c2c)** を起動するだけで、RS-485 変換器やカーネルドライバ・管理者権限なしに仮想 COM ペア（例: `COM10` ⇔ `COM11`）で Modbus RTU / ASCII の事前検証とリアルタイム HEX フレーム監視を行えます。
 
 ---
 
@@ -66,7 +68,7 @@ VBA マクロを一切記述することなく、 **標準の `.xlsx`（マク�
 | **対応 Excel** | Microsoft Excel 2016 / 2019 / 2021 / Microsoft 365 (デスクトップ版 32bit / 64bit) |
 | **必須アドイン** | [TermAddIn](https://github.com/Monaca-App/TermAddIn) (Excel VSTO アドイン) |
 | **ランタイム** | .NET Framework 4.8 / Visual Studio 2010 Tools for Office Runtime |
-| **インターフェース** | RS-485, RS-422, RS-232C, USB 仮想 COM ポート, Ethernet (10BASE-T/100BASE-TX/1000BASE-T) |
+| **インターフェース** | RS-485, RS-422, RS-232C, USB 仮想 COM ポート, [c2c](https://github.com/Monaca-App/c2c) 仮想ヌルモデムポート, Ethernet (10BASE-T/100BASE-TX/1000BASE-T) |
 | **対応プロトコル** | Modbus RTU / Modbus ASCII / Modbus TCP |
 | **対象機器** | 温調計（理化工業・オムロン・アズビル等）、インバータ、電力計、PLC（Modbus スレーブ対応機全般） |
 
@@ -115,5 +117,6 @@ Excel シート上での典型的な Modbus 通信シーケンスの構成例で
 
 * **開発元**: [Monaca アプリ工房 (Monaca App Store)](https://github.com/Monaca-App/store)
 * **親プロジェクト**: [TermAddIn](https://github.com/Monaca-App/TermAddIn)
+* **関連コンパニオンツール**: [c2c - ドライバ不要の仮想ヌルモデム＆通信モニター](https://github.com/Monaca-App/c2c)
 * **Copyright**: Copyright (C) Monaca App Store 2026 All rights reserved.
 * **お問い合わせ**: 不具合報告や機能要望は、GitHub の Issue までお気軽にお寄せください。

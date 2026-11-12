@@ -7,7 +7,7 @@
 **Modbus_Open** は、Term アプリケーションの UI 設定および `Modbus_Mode` で指定された伝送モード（`RTU` / `ASCII` の場合は UART シリアルポート、`TCP` の場合は TCP ソケット回線）をオープンし、Modbus マスター通信セッションを開始するコマンドです。
 実行時に Term 通信制御の排他選択モードを **Modbus モード**（`TermAnalysis.Modbus.dll`）へ確定させます。
 
-> 💡 **補足**: 物理的な COM ポート番号や接続先 IP アドレスは PC 環境設定（UI 設定値）から取得し、プロトコル種別（RTU / ASCII / TCP）に応じて下位トランスポートを自動選択します。
+> 💡 **補足**: 使用する COM ポート番号や接続先 IP アドレスは PC 環境設定（UI 設定値）から取得し、プロトコル種別（RTU / ASCII / TCP）に応じて下位トランスポートを自動選択します。RTU / ASCII モードでは物理 COM ポートのほか、公式無償ツール **[c2c](https://github.com/Monaca-App/c2c)** が公開中の仮想 COM ポート（例: `COM10` ⇔ `COM11`）も透過的にオープン可能です。
 
 ---
 
