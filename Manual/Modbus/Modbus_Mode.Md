@@ -1,7 +1,5 @@
 ﻿# コマンドリファレンス：Modbus_Mode
 
----
-
 ## 概要
 
 **Modbus_Mode** は、Modbus 通信の伝送プロトコルモード（`RTU` / `ASCII` / `TCP`）、およびシリアル回線（`RTU` / `ASCII`）使用時の UART 通信条件（ボーレート・パリティ・データビット・ストップビット）とフロー制御を設定するコマンドです。
@@ -15,25 +13,29 @@
 ### コマンド構文
 
 ```csv
-,SEQUENCE,Modbus_Mode, "<ProtocolMode: RTU / ASCII / TCP>", "[CommProperty]", "[Handshake]"
+,SEQUENCE, [ステップキー], Modbus_Mode, "[ProtocolModeOrSettingType: RTU]", "[CommPropertyOrValue]", "[Handshake]", "[LegacyRegAddr]", "[LegacyDataCount]"
 ```
 
 ### パラメータ（引数）一覧
 
-| 引数位置 | パラメータ名 | 必須/任意 | 型・制約 | 説明 |
-| :---: | :--- | :---: | :--- | :--- |
-| 第1引数 | `ProtocolMode` | **必須** | `RTU` / `ASCII` / `TCP` | Modbus の伝送フレーム方式を指定します。 |
-| 第2引数 | `CommProperty` | 任意 | `"Baud,Parity,DataBits,StopBits"`（例: `"19200,E,8,1"`） | `RTU` または `ASCII` モード時の UART 通信条件を指定します。`TCP` モード時または省略時は現在値（UI 設定値）を維持します。 |
-| 第3引数 | `Handshake` | 任意 | `NONE` / `RTSCTS` / `XONXOFF` | シリアル通信時のフロー制御方式を指定します。省略時は現在値を維持します。 |
+| 引数位置 | 引数名 | 必須/任意 | 説明・制約 |
+| :--- | :--- | :---: | :--- |
+| 第 1 引数 | `ProtocolModeOrSettingType` | 任意 | Modbus 伝送フレーム方式（`"RTU"` / `"ASCII"` / `"TCP"`、省略時既定値: `"RTU"`）または個別設定種別キーワード。 |
+| 第 2 引数 | `CommPropertyOrValue` | 任意 | `RTU` / `ASCII` 時の UART 通信条件（例: `"19200,E,8,1"`）または設定値（省略時既定値: `""`＝現在値維持）。 |
+| 第 3 引数 | `Handshake` | 任意 | シリアル通信時のフロー制御方式（`"NONE"` / `"RTSCTS"` / `"XONXOFF"`、省略時既定値: `""`）。 |
+| 第 4 引数 | `LegacyRegAddr` | 任意 | 旧構文互換用の既定レジスタ開始アドレス指定（通常は省略、既定値: `""`）。 |
+| 第 5 引数 | `LegacyDataCount` | 任意 | 旧構文互換用の既定データ点数指定（通常は省略、既定値: `""`）。 |
 
 ---
 
 ## 🔄 特殊置換規約・分岐規約の適用
 
-1. **カンマを含む第2引数の保護**:
-   - `"19200,E,8,1"` や `"9600,E,7,1"` のようにカンマを含む UART 条件は、ダブルクォーテーション `""` で囲んで記述します。
-2. **変数展開（`$` / `@` / `#`）**:
-   - 各引数には変数を指定可能です（例: `"$MB_PROTO"`, `"$UART_PROP"`）。
+本コマンドの引数における特殊記法および解釈ルールです。
+* **動的置換（`$`）**: 引数内で `$PARAMキー$` のように記述すると、実行時に変数プール（PARAM）の値へ動的置換されます。（適用可能な引数: 全引数対応）
+* **ジャンプ先指定（`#`）**: 本コマンドはジャンプ制御を行わないため適用されません。（適用可能な引数: 非適用）
+* **共通コマンド指定（`@`）**: 本コマンドは外部マクロを呼び出さないため、共通コマンド呼び出し記法は適用されません。（適用可能な引数: 非適用）
+* **カンマのエスケープ**: 通信条件文字列（例: `"9600,E,7,1"`）や複数データのカンマ区切り値を単一引数として渡す場合は、必ず `"..."` と二重引用符で囲んで記述します。
+* **エイリアス（別名）**: `Analysis_ModBus_Mode`
 
 ---
 
@@ -41,32 +43,32 @@
 
 ### スクリプト記述例
 
+※COMMAND ブロック配下の子要素行（PARAM, SEQUENCE）は必ず行頭カンマから開始し、スペースインデントや行末コメント（`;`）は記述しないでください。
+
 ```csv
+COMMAND, "SAMPLE_MODBUS_MODE", ""
 ; 1. Modbus RTUモード（19200bps, 偶数パリティ, 8bit, Stop 1）に設定
-,SEQUENCE,Modbus_Mode, "RTU", "19200,E,8,1", "NONE"
-,SEQUENCE,Modbus_Open
-,SEQUENCE,Modbus_Read, "1", "03", "0000", "1", "$RTU_VAL"
-,SEQUENCE,Modbus_Close
-
+,SEQUENCE, 010, Modbus_Mode, "RTU", "19200,E,8,1", "NONE"
+,SEQUENCE, 020, Modbus_Open
+,SEQUENCE, 030, Modbus_Read, "1", "03", "0000", "1", "$RTU_VAL$"
+,SEQUENCE, 040, Modbus_Close
 ; 2. Modbus ASCIIモード（9600bps, 偶数パリティ, 7bit, Stop 1）に切り替え
-,SEQUENCE,Modbus_Mode, "ASCII", "9600,E,7,1", "NONE"
-,SEQUENCE,Modbus_Open
-,SEQUENCE,Modbus_Read, "1", "03", "0000", "1", "$ASC_VAL"
-,SEQUENCE,Modbus_Close
-
+,SEQUENCE, 050, Modbus_Mode, "ASCII", "9600,E,7,1", "NONE"
+,SEQUENCE, 060, Modbus_Open
+,SEQUENCE, 070, Modbus_Read, "1", "03", "0000", "1", "$ASC_VAL$"
+,SEQUENCE, 080, Modbus_Close
 ; 3. Modbus TCPモードに切り替え（IPとポートはUI設定を使用）
-,SEQUENCE,Modbus_Mode, "TCP"
-,SEQUENCE,Modbus_Open
-,SEQUENCE,Modbus_Read, "1", "03", "0000", "1", "$TCP_VAL"
-,SEQUENCE,Modbus_Close
-,SEQUENCE,Exit
+,SEQUENCE, 090, Modbus_Mode, "TCP"
+,SEQUENCE, 100, Modbus_Open
+,SEQUENCE, 110, Modbus_Read, "1", "03", "0000", "1", "$TCP_VAL$"
+,SEQUENCE, 120, Modbus_Close
+,SEQUENCE, 130, Exit
 ```
 
 ### 実行時の挙動・変数変化
 
-1. 1 回目の `Modbus_Mode` では RTU バイナリフレーミング（CRC-16）と 8 データビット UART 設定が適用されます。
-2. 2 回目の `Modbus_Mode` では ASCII フレーミング（`:` 開始、LRC、`CR+LF` 終端）と 7 データビット UART 設定に切り替わります。
-3. 3 回目の `Modbus_Mode` では TCP ソケット（MBAP ヘッダ付与、CRC なし）に切り替わります。
+* **実行前の状態**: Term 通信エンジンが初期化され、必要な通信パラメータおよび変数プール（`PARAM`）が準備されている状態。
+* **実行後の状態**: 1 回目の `Modbus_Mode` では RTU バイナリフレーミング（CRC-16）と 8 データビット UART 設定が適用されます。 2 回目の `Modbus_Mode` では ASCII フレーミング（`:` 開始、LRC、`CR+LF` 終端）と 7 データビット UART 設定に切り替わります。 3 回目の `Modbus_Mode` では TCP ソケット（MBAP ヘッダ付与、CRC なし）に切り替わります。
 
 ---
 
@@ -88,6 +90,12 @@ sequenceDiagram
         Cmd->>Trans: UpdateSerialSettings(commProp, handshake)
     end
     Cmd-->>Script: 正常終了 (Next Step)
+    alt パラメータおよびプロトコル検証が正常な場合
+        Cmd-->>Script: 正常完了 (IsCommandGo = true)
+    else 引数範囲外または通信状態異常の場合
+        Cmd->>Cmd: エラーログ出力 (_log.LogError)
+        Cmd-->>Script: 安全停止 (SetErrorAndHalt)
+    end
 ```
 
 ---
@@ -103,15 +111,17 @@ sequenceDiagram
 
 ## 🧪 ユニットテスト仕様
 
+本コマンドクラス（`Modbus_ModeCommand.cs`）に実装されている `RunUnitTest()` メソッドが検証するユニットテストの仕様です。
+
 ### テスト実行前提条件
-- **対象クラス**: `TermAnalysis.Modbus.Modbus_ModeCommand`（`Modbus_ModeCommand.cs`）
-- **モック環境**: `IModbusTransportAdapter` および `ModbusFrameCodec` が注入されていること。
+
+* **実行トリガー**: `RunUnitTest()` メソッドの呼び出し
+* **有効化条件**: システム全体の最小ログレベル（`ErrorLogger.MinimumLevel`）が `LogLevel.Test` であること（それ以外の場合は無効化ガードにより早期リターン）
+* **検証結果出力**: `_log.LogTest` によるログ出力。検証失敗時は `_log.LogError`、予期せぬ例外発生時は `_log.LogCritical` で記録し、`finally` ブロックで `CurrentMode = ModbusProtocolMode.RTU`、`"9600,N,8,1"`、`"None"`、および `SerialDriver`（`BaudRate = 9600`, `DataBits = 8`）へ初期状態を復元します。
 
 ### テストケース一覧
 
-| テストID | テスト観点 | 入力スクリプト | 期待される動作・検証項目 |
-| :--- | :--- | :--- | :--- |
-| `UT-MODBUS-MODE-01` | RTUモード設定 | `,SEQUENCE,Modbus_Mode, "RTU", "19200,E,8,1", "NONE"` | フレーミングが `RTU`、UART が `19200,E,8,1` に設定されること。 |
-| `UT-MODBUS-MODE-02` | TCPモード設定 | `,SEQUENCE,Modbus_Mode, "TCP"` | フレーミングが `TCP`（MBAP ヘッダ）に切り替わること。 |
-| `UT-MODBUS-MODE-03` | 異常系（RTUで7bit指定） | `,SEQUENCE,Modbus_Mode, "RTU", "9600,E,7,1"` | `ArgumentException` が送出され、RTU 7bit 設定が拒否されること。 |
-
+| No | テストカテゴリ | テスト条件（入力値） | 期待される結果（出力値） | 検証の目的 / 観点 |
+| :---: | :--- | :--- | :--- | :--- |
+| **1** | 正常系 | 引数 `"RTU"`, `"19200,E,8,1"`, `"RtsCts"` の 3 引数を指定して実行 | `!param.HasError` かつ `CurrentMode == ModbusProtocolMode.RTU`、`Master.ProtocolMode == ModbusProtocolMode.Rtu`、UART および `SerialDriver` の `BaudRate == 19200`・`DataBits == 8` となる | Modbus RTU 伝送モード・シリアル通信条件・RTS/CTS フロー制御の一括反映検証 |
+| **2** | 異常系 | 引数なしまたは 6 個以上の指定（`ValidateParamRange(1, 5)` 違反）、および不正設定文字列による例外発生 | 引数範囲外エラー出力による早期リターン、または `_log.LogCritical` 記録と `SetErrorAndHalt(-1, ex.Message)` による安全停止 | 引数個数境界ガードおよび通信条件更新例外時のクラッシュ防御検証 |

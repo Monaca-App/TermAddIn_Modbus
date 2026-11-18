@@ -24,14 +24,14 @@ VBA マクロを一切記述することなく、 **標準の `.xlsx`（マク�
 > [!NOTE]
 > **利用前提とライセンス体系**  
 > 本エクステンションは [TermAddIn 本体](https://github.com/Monaca-App/TermAddIn) 上で動作します。  
-> TermAddIn ではプロトコル毎に個別ライセンスを設ける体系を採用しており、本機能のご利用には **`TermAddIn_Modbus` 個別ライセンス（料金未定・準備中）** が適用されます（現在は評価期間として全機能を無償でご試用いただけます）。
+> TermAddIn ではプロトコル毎に個別ライセンスを設ける体系を採用しており、本機能のご利用には **`TermAddIn_Modbus` 個別ライセンス（料金未定・準備中）** が適用されます（なお、 **TermAddIn 本体** は現在 **近日公開** であり、全機能を無償でご試用いただける **評価期間は公開時に設定** いたします）。
 
 ---
 
 ## ✨ 主な機能・特徴
 
 1. **RTU / ASCII / TCP の 3大伝送モードを単一エクステンションで完全網羅**
-   * RS-485 / RS-232C 経由のバイナリ通信 **Modbus RTU**、テキスト形式の **Modbus ASCII**、および Ethernet LAN 経由の **Modbus TCP** に対応。`Modbus_Mode` コマンド 1 つで下位トランスポートとフレーミングエンジンを即座に動的切り替え。
+   * RS-485 / RS-232C 経由のバイナリ通信 **Modbus RTU** 、テキスト形式の **Modbus ASCII** 、および Ethernet LAN 経由の **Modbus TCP** に対応。`Modbus_Mode` コマンド 1 つで下位トランスポートとフレーミングエンジンを即座に動的切り替え。
 2. **煩雑なチェックサム・フレーム整合性を完全自動化**
    * RTU モードの CRC-16 計算、ASCII モードの LRC 計算・コロン（`:`）開始/CRLF 終端フレーミング、および TCP モードの 7 バイト MBAP ヘッダ（トランザクション ID・プロトコル ID・長さフィールド）の生成・検証をすべて内部エンジンが自動処理。
 3. **主要な読み出し・書き込みファンクションコードを標準サポート**
@@ -74,7 +74,7 @@ VBA マクロを一切記述することなく、 **標準の `.xlsx`（マク�
 
 ---
 
-## 🔰 シーケンス記述例（Excel セル設定）
+## 🔰 シーケンス記述例・同梱サンプル資材（`Sample/Modbus/`）
 
 Excel シート上での典型的な Modbus 通信シーケンスの構成例です。
 
@@ -83,13 +83,22 @@ Excel シート上での典型的な Modbus 通信シーケンスの構成例で
 ,SEQUENCE, 010, Modbus_Mode, "RTU", "19200,E,8,1", "NONE"
 ,SEQUENCE, 020, Modbus_Open
 ; 2. スレーブ局番 1 の保持レジスタ（FC03）アドレス 0x0000 から 2 ワードを読出
-,SEQUENCE, 030, Modbus_Read, "1", "03", "0000", "2", "$READ_VAL"
+,SEQUENCE, 030, Modbus_Read, "1", "03", "0000", "2", "READ_VAL"
 ; 3. スレーブ局番 1 の設定値レジスタ（FC06）アドレス 0x0010 に 1500 を書き込み
 ,SEQUENCE, 040, Modbus_Write, "1", "06", "0010", "1500"
 ; 4. 回線をクローズして終了
 ,SEQUENCE, 050, Modbus_Close
 ,SEQUENCE, 060, Exit
 ```
+
+### 同梱サンプルマクロ・AI自動生成プロンプト集（RTU / ASCII / TCP）
+Modbus の全 3 伝送モードそれぞれに対応した動作確認用マクロスクリプト（CSV）および AI 自動生成プロンプトが **`Sample/Modbus/`** に収録されています（Excel リボンの **「マニュアル配置 (`Make_Doc`)」** 実行時には `<設定場所>\Sample\TermAddIn\Modbus\` へ自動展開されます）。
+
+| 伝送モード | サンプルマクロ（Shift-JIS CSV） | AI 自動生成プロンプト |
+| :--- | :--- | :--- |
+| **Modbus RTU** （バイナリ＋CRC-16） | [`Sample/Modbus/Modbus_RTU.csv`](./Sample/Modbus/Modbus_RTU.csv) | [`Sample/Modbus/Modbus_RTU_prompt.md`](./Sample/Modbus/Modbus_RTU_prompt.md) |
+| **Modbus ASCII** （テキスト＋LRC） | [`Sample/Modbus/Modbus_ASCII.csv`](./Sample/Modbus/Modbus_ASCII.csv) | [`Sample/Modbus/Modbus_ASCII_prompt.md`](./Sample/Modbus/Modbus_ASCII_prompt.md) |
+| **Modbus TCP** （Ethernet MBAP・Port 502） | [`Sample/Modbus/Modbus_TCP.csv`](./Sample/Modbus/Modbus_TCP.csv) | [`Sample/Modbus/Modbus_TCP_prompt.md`](./Sample/Modbus/Modbus_TCP_prompt.md) |
 
 ---
 
@@ -99,7 +108,7 @@ Excel シート上での典型的な Modbus 通信シーケンスの構成例で
 > **料金プランおよび正式販売について**  
 > 本エクステンション（`TermAddIn_Modbus`）の販売料金およびライセンスプラン（買い切り・サブスクリプション）は **現在検討中（未定）** です。  
 > 正式な価格およびお申込み受付開始時期が決定次第、本ドキュメントおよび [Monaca アプリ工房ポータル](https://github.com/Monaca-App/store) にてご案内いたします。  
-> 現在は評価版として全機能をご試用いただけます。
+> なお、[TermAddIn 本体](https://github.com/Monaca-App/TermAddIn) は現在 **近日公開** となっており、全機能を無償でご試用いただける **評価期間は公開時に設定** いたします。
 
 | プラン | 価格 | お支払い・お申込み |
 | :--- | :---: | :---: |
