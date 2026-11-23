@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<TermEmulatorProfile Version="1.0">
+  <Channel ChannelId="0" Enabled="true" Name="Sample Modbus ASCII Slave (COM10 / Unit 1)" Mode="MonacaVirtualComHost" ProtocolKey="Modbus" ShareGlobalMemory="true">
+    <EndpointA PortName="COM10" BaudRate="9600" DataBits="7" Parity="Even" StopBits="One" Handshake="None" ListenAddress="127.0.0.1" Port="5020" PipeName="TermEmulatorPipe0" />
+    <EndpointB TargetHost="127.0.0.1" TargetPort="5021" TargetPortName="COM11" TargetBaudRate="9600" />
+    <Framing DelimiterMode="CrLf" IdleTimeoutMs="20" FixedFrameLength="8" CustomDelimiterHex="0D 0A" EncodingName="ASCII" DefaultTerminator="\r\n" DefaultChecksum="LrcAscii" />
+    <ProtocolOptions>
+      <ProtocolOption Key="AcceptAllUnits" Value="true" />
+      <ProtocolOption Key="AllowBroadcast" Value="true" />
+      <ProtocolOption Key="AllowFc01" Value="true" />
+      <ProtocolOption Key="AllowFc02" Value="true" />
+      <ProtocolOption Key="AllowFc03" Value="true" />
+      <ProtocolOption Key="AllowFc04" Value="true" />
+      <ProtocolOption Key="AllowFc0506" Value="true" />
+      <ProtocolOption Key="AllowFc0F10" Value="true" />
+      <ProtocolOption Key="AllowFc17" Value="true" />
+      <ProtocolOption Key="BaseDelayMs" Value="2" />
+      <ProtocolOption Key="ExceptionCode" Value="0" />
+      <ProtocolOption Key="ExceptionParam" Value="5" />
+      <ProtocolOption Key="ExceptionTrigger" Value="EveryN" />
+      <ProtocolOption Key="Framing" Value="ASCII" />
+      <ProtocolOption Key="MaxAddress" Value="9999" />
+      <ProtocolOption Key="UnitId" Value="1" />
+    </ProtocolOptions>
+    <Rules>
+      <Rule RuleId="r001" Enabled="true" Name="FC03 Read Holding Registers" Priority="10" PatternType="PrefixAscii" MatchPattern=":0103" CaseSensitive="false" ReplyPayload=":0103020064" ReplyIsHex="false" ResponseDelayMs="5" AppendChecksum="LrcAscii" AppendTerminator="true" MemoryWriteExpression="" />
+      <Rule RuleId="r002" Enabled="true" Name="FC04 Read Input Registers" Priority="20" PatternType="PrefixAscii" MatchPattern=":0104" CaseSensitive="false" ReplyPayload=":01040201F4" ReplyIsHex="false" ResponseDelayMs="5" AppendChecksum="LrcAscii" AppendTerminator="true" MemoryWriteExpression="" />
+      <Rule RuleId="r003" Enabled="true" Name="FC06 Write Single Register" Priority="30" PatternType="PrefixAscii" MatchPattern=":0106" CaseSensitive="false" ReplyPayload=":010600000001" ReplyIsHex="false" ResponseDelayMs="5" AppendChecksum="LrcAscii" AppendTerminator="true" MemoryWriteExpression="D0=1" />
+      <Rule RuleId="r004" Enabled="true" Name="FC10 Write Multiple Registers" Priority="40" PatternType="PrefixAscii" MatchPattern=":0110" CaseSensitive="false" ReplyPayload=":011000000002" ReplyIsHex="false" ResponseDelayMs="5" AppendChecksum="LrcAscii" AppendTerminator="true" MemoryWriteExpression="" />
+    </Rules>
+    <FaultInjection Enabled="false" Direction="TxOnly" BaseLatencyMs="50" JitterMs="20" ChunkSplitEnabled="false" ChunkSizeBytes="4" InterChunkGapMs="15" DropTrigger="EveryNPackets" DropEveryN="10" DropPercent="5" CorruptTrigger="EveryNPackets" CorruptKind="InvertLastTwoBytes" CorruptEveryN="10" CorruptPercent="5" DisconnectEveryNPackets="0" DisconnectHoldMs="500" />
+    <PeriodicEmit PeriodicEnabled="false" IntervalMs="2000" PeriodicPayload=":0103020064" PeriodicIsHex="false" AppendChecksum="LrcAscii" AppendTerminator="true" ScenarioEnabled="false" ScenarioLoop="true">
+      <Step StepIndex="1" TriggerPattern=":0103" DelayMs="20" Payload=":010302006496\r\n" IsHex="false" Comment="Modbus ASCII FC03 応答ステップ" />
+      <Step StepIndex="2" TriggerPattern=":0106" DelayMs="20" Payload=":010600000001F8\r\n" IsHex="false" Comment="Modbus ASCII FC06 応答ステップ" />
+    </PeriodicEmit>
+  </Channel>
+</TermEmulatorProfile>

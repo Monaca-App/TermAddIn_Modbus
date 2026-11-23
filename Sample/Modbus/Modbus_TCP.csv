@@ -9,9 +9,9 @@ TITLE, "Modbus通信制御 (TCPモード)"
 ; コマンド定義: PORT_OPEN (通信ポート接続)
 ; ------------------------------------------------------------------------------
 COMMAND, "PORT_OPEN"
-,PARAM, HOST_IP, Text, "接続先IPアドレス", "192.168.1.10"
-,PARAM, PORT_NO, Text, "接続先ポート番号", "502"
-,PARAM, UNIT_ID, Text, "既定ユニットID", "1"
+,PARAM, HOST_IP, List, "接続先IP(空欄=プロパティ)", "", "127.0.0.1", "192.168.0.10", "192.168.1.10"
+,PARAM, PORT_NO, List, "ポート番号(空欄=プロパティ)", "", "502", "1502"
+,PARAM, UNIT_ID, List, "ユニットID(空欄=プロパティ)", "", "1", "2", "3", "255"
 ,SEQUENCE, 10, Modbus_Mode, "TCP"
 ,SEQUENCE, 20, Modbus_Open, "TCP", "$HOST_IP$", "$PORT_NO$", "$UNIT_ID$"
 ,SEQUENCE, 30, Exit
@@ -20,7 +20,7 @@ COMMAND, "PORT_OPEN"
 ; コマンド定義: REG_READ (レジスタ読出: FC03保持 / FC04入力)
 ; ------------------------------------------------------------------------------
 COMMAND, "REG_READ", "RESULT_DATA"
-,PARAM, UNIT_ID, Text, "ユニットID", "1"
+,PARAM, UNIT_ID, List, "ユニットID(空欄=プロパティ)", "", "1", "2", "3", "255"
 ,PARAM, FUNC_CODE, List, "ファンクション", "FC03", "FC04"
 ,PARAM, START_ADDR, Text, "開始アドレス", "0x0000"
 ,PARAM, POINTS, Text, "読出ワード数", "2"
@@ -32,7 +32,7 @@ COMMAND, "REG_READ", "RESULT_DATA"
 ; コマンド定義: BIT_READ (ビット読出: FC01コイル / FC02入力ステータス)
 ; ------------------------------------------------------------------------------
 COMMAND, "BIT_READ", "RESULT_DATA"
-,PARAM, UNIT_ID, Text, "ユニットID", "1"
+,PARAM, UNIT_ID, List, "ユニットID(空欄=プロパティ)", "", "1", "2", "3", "255"
 ,PARAM, FUNC_CODE, List, "ファンクション", "FC01", "FC02"
 ,PARAM, START_ADDR, Text, "開始アドレス", "0x0000"
 ,PARAM, POINTS, Text, "読出ビット数", "8"
@@ -44,7 +44,7 @@ COMMAND, "BIT_READ", "RESULT_DATA"
 ; コマンド定義: REG_WRITE (レジスタ書込: FC06単一 / FC16複数)
 ; ------------------------------------------------------------------------------
 COMMAND, "REG_WRITE"
-,PARAM, UNIT_ID, Text, "ユニットID", "1"
+,PARAM, UNIT_ID, List, "ユニットID(空欄=プロパティ)", "", "1", "2", "3", "255"
 ,PARAM, FUNC_CODE, List, "ファンクション", "FC06", "FC16"
 ,PARAM, START_ADDR, Text, "書込開始アドレス", "0x0010"
 ,PARAM, WRITE_VALS, Text, "書込レジスタ値", "1500"
@@ -55,7 +55,7 @@ COMMAND, "REG_WRITE"
 ; コマンド定義: COIL_WRITE (コイル書込: FC05単一 / FC15複数)
 ; ------------------------------------------------------------------------------
 COMMAND, "COIL_WRITE"
-,PARAM, UNIT_ID, Text, "ユニットID", "1"
+,PARAM, UNIT_ID, List, "ユニットID(空欄=プロパティ)", "", "1", "2", "3", "255"
 ,PARAM, FUNC_CODE, List, "ファンクション", "FC05", "FC15"
 ,PARAM, START_ADDR, Text, "書込開始アドレス", "0x0000"
 ,PARAM, WRITE_BITS, Text, "書込コイル値", "1"

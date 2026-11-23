@@ -9,11 +9,11 @@ TITLE, "Modbus通信制御 (RTUモード)"
 ; コマンド定義: PORT_OPEN (通信ポート接続)
 ; ------------------------------------------------------------------------------
 COMMAND, "PORT_OPEN"
-,PARAM, BAUD, List, "ボーレート", "19200", "9600", "38400", "57600", "115200"
-,PARAM, PARITY, List, "パリティ", "E", "O", "N"
-,PARAM, DATA_BITS, List, "データ長", "8"
-,PARAM, STOP_BITS, List, "ストップビット", "1", "2"
-,PARAM, FLOW_CTRL, List, "フロー制御", "NONE", "RTSCTS", "XONXOFF"
+,PARAM, BAUD, List, "ボーレート(空欄=プロパティ)", "", "9600", "19200", "38400", "57600", "115200"
+,PARAM, PARITY, List, "パリティ(空欄=プロパティ)", "", "N", "E", "O"
+,PARAM, DATA_BITS, List, "データ長(空欄=プロパティ)", "", "8", "7"
+,PARAM, STOP_BITS, List, "ストップビット(空欄=プロパティ)", "", "1", "2"
+,PARAM, FLOW_CTRL, List, "フロー制御(空欄=プロパティ)", "", "NONE", "RTSCTS", "XONXOFF"
 ,SEQUENCE, 10, Modbus_Mode, "RTU", "$BAUD$,$PARITY$,$DATA_BITS$,$STOP_BITS$", "$FLOW_CTRL$"
 ,SEQUENCE, 20, Modbus_Open
 ,SEQUENCE, 30, Exit
@@ -22,7 +22,7 @@ COMMAND, "PORT_OPEN"
 ; コマンド定義: REG_READ (レジスタ読出: FC03保持 / FC04入力)
 ; ------------------------------------------------------------------------------
 COMMAND, "REG_READ", "RESULT_DATA"
-,PARAM, SLAVE_ID, Text, "スレーブ局番", "1"
+,PARAM, SLAVE_ID, List, "スレーブ局番(空欄=プロパティ)", "", "1", "2", "3", "10"
 ,PARAM, FUNC_CODE, List, "ファンクション", "FC03", "FC04"
 ,PARAM, START_ADDR, Text, "開始アドレス", "0x0000"
 ,PARAM, POINTS, Text, "読出ワード数", "2"
@@ -34,7 +34,7 @@ COMMAND, "REG_READ", "RESULT_DATA"
 ; コマンド定義: BIT_READ (ビット読出: FC01コイル / FC02入力ステータス)
 ; ------------------------------------------------------------------------------
 COMMAND, "BIT_READ", "RESULT_DATA"
-,PARAM, SLAVE_ID, Text, "スレーブ局番", "1"
+,PARAM, SLAVE_ID, List, "スレーブ局番(空欄=プロパティ)", "", "1", "2", "3", "10"
 ,PARAM, FUNC_CODE, List, "ファンクション", "FC01", "FC02"
 ,PARAM, START_ADDR, Text, "開始アドレス", "0x0000"
 ,PARAM, POINTS, Text, "読出ビット数", "8"
@@ -46,7 +46,7 @@ COMMAND, "BIT_READ", "RESULT_DATA"
 ; コマンド定義: REG_WRITE (レジスタ書込: FC06単一 / FC16複数)
 ; ------------------------------------------------------------------------------
 COMMAND, "REG_WRITE"
-,PARAM, SLAVE_ID, Text, "スレーブ局番", "1"
+,PARAM, SLAVE_ID, List, "スレーブ局番(空欄=プロパティ)", "", "1", "2", "3", "10"
 ,PARAM, FUNC_CODE, List, "ファンクション", "FC06", "FC16"
 ,PARAM, START_ADDR, Text, "書込開始アドレス", "0x0010"
 ,PARAM, WRITE_VALS, Text, "書込レジスタ値", "1500"
@@ -57,7 +57,7 @@ COMMAND, "REG_WRITE"
 ; コマンド定義: COIL_WRITE (コイル書込: FC05単一 / FC15複数)
 ; ------------------------------------------------------------------------------
 COMMAND, "COIL_WRITE"
-,PARAM, SLAVE_ID, Text, "スレーブ局番", "1"
+,PARAM, SLAVE_ID, List, "スレーブ局番(空欄=プロパティ)", "", "1", "2", "3", "10"
 ,PARAM, FUNC_CODE, List, "ファンクション", "FC05", "FC15"
 ,PARAM, START_ADDR, Text, "書込開始アドレス", "0x0000"
 ,PARAM, WRITE_BITS, Text, "書込コイル値", "1"

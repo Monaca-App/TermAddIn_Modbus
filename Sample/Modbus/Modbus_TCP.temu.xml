@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<TermEmulatorProfile Version="1.0">
+  <Channel ChannelId="0" Enabled="true" Name="Sample Modbus TCP Slave (127.0.0.1:502 / Unit 1)" Mode="TcpServerDevice" ProtocolKey="Modbus" ShareGlobalMemory="true">
+    <EndpointA PortName="COM10" BaudRate="9600" DataBits="8" Parity="None" StopBits="One" Handshake="None" ListenAddress="127.0.0.1" Port="502" PipeName="TermEmulatorPipe0" />
+    <EndpointB TargetHost="127.0.0.1" TargetPort="5021" TargetPortName="COM11" TargetBaudRate="9600" />
+    <Framing DelimiterMode="IdleTimeout" IdleTimeoutMs="20" FixedFrameLength="8" CustomDelimiterHex="0D 0A" EncodingName="ASCII" DefaultTerminator="" DefaultChecksum="None" />
+    <ProtocolOptions>
+      <ProtocolOption Key="AcceptAllUnits" Value="true" />
+      <ProtocolOption Key="AllowBroadcast" Value="true" />
+      <ProtocolOption Key="AllowFc01" Value="true" />
+      <ProtocolOption Key="AllowFc02" Value="true" />
+      <ProtocolOption Key="AllowFc03" Value="true" />
+      <ProtocolOption Key="AllowFc04" Value="true" />
+      <ProtocolOption Key="AllowFc0506" Value="true" />
+      <ProtocolOption Key="AllowFc0F10" Value="true" />
+      <ProtocolOption Key="AllowFc17" Value="true" />
+      <ProtocolOption Key="BaseDelayMs" Value="2" />
+      <ProtocolOption Key="ExceptionCode" Value="0" />
+      <ProtocolOption Key="ExceptionParam" Value="5" />
+      <ProtocolOption Key="ExceptionTrigger" Value="EveryN" />
+      <ProtocolOption Key="Framing" Value="TCP" />
+      <ProtocolOption Key="MaxAddress" Value="9999" />
+      <ProtocolOption Key="UnitId" Value="1" />
+    </ProtocolOptions>
+    <Rules>
+      <Rule RuleId="r001" Enabled="true" Name="FC03 Read Holding Registers" Priority="10" PatternType="WildcardHex" MatchPattern="?? ?? 00 00 00 06 01 03 ?? ?? ?? ??" CaseSensitive="false" ReplyPayload="00 01 00 00 00 05 01 03 02 00 64" ReplyIsHex="true" ResponseDelayMs="5" AppendChecksum="None" AppendTerminator="false" MemoryWriteExpression="" />
+      <Rule RuleId="r002" Enabled="true" Name="FC04 Read Input Registers" Priority="20" PatternType="WildcardHex" MatchPattern="?? ?? 00 00 00 06 01 04 ?? ?? ?? ??" CaseSensitive="false" ReplyPayload="00 01 00 00 00 05 01 04 02 01 F4" ReplyIsHex="true" ResponseDelayMs="5" AppendChecksum="None" AppendTerminator="false" MemoryWriteExpression="" />
+      <Rule RuleId="r003" Enabled="true" Name="FC06 Write Single Register" Priority="30" PatternType="WildcardHex" MatchPattern="?? ?? 00 00 00 06 01 06 ?? ?? ?? ??" CaseSensitive="false" ReplyPayload="00 01 00 00 00 06 01 06 00 00 00 01" ReplyIsHex="true" ResponseDelayMs="5" AppendChecksum="None" AppendTerminator="false" MemoryWriteExpression="D0=1" />
+      <Rule RuleId="r004" Enabled="true" Name="FC10 Write Multiple Registers" Priority="40" PatternType="WildcardHex" MatchPattern="?? ?? 00 00 ?? ?? 01 10 *" CaseSensitive="false" ReplyPayload="00 01 00 00 00 06 01 10 00 00 00 02" ReplyIsHex="true" ResponseDelayMs="5" AppendChecksum="None" AppendTerminator="false" MemoryWriteExpression="" />
+    </Rules>
+    <FaultInjection Enabled="false" Direction="TxOnly" BaseLatencyMs="40" JitterMs="15" ChunkSplitEnabled="false" ChunkSizeBytes="4" InterChunkGapMs="15" DropTrigger="EveryNPackets" DropEveryN="10" DropPercent="5" CorruptTrigger="EveryNPackets" CorruptKind="InvertLastTwoBytes" CorruptEveryN="10" CorruptPercent="5" DisconnectEveryNPackets="0" DisconnectHoldMs="500" />
+    <PeriodicEmit PeriodicEnabled="false" IntervalMs="2000" PeriodicPayload="00 01 00 00 00 05 01 03 02 00 64" PeriodicIsHex="true" AppendChecksum="None" AppendTerminator="false" ScenarioEnabled="false" ScenarioLoop="true">
+      <Step StepIndex="1" TriggerPattern="01 03" DelayMs="15" Payload="00 01 00 00 00 05 01 03 02 00 64" IsHex="true" Comment="Modbus TCP FC03 応答ステップ" />
+      <Step StepIndex="2" TriggerPattern="01 06" DelayMs="15" Payload="00 01 00 00 00 06 01 06 00 00 00 01" IsHex="true" Comment="Modbus TCP FC06 応答ステップ" />
+    </PeriodicEmit>
+  </Channel>
+</TermEmulatorProfile>
