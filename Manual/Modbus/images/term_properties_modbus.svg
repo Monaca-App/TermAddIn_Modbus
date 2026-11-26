@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="530" viewBox="0 0 980 530">
+  <defs>
+    <filter id="winShadow" x="-3%" y="-3%" width="106%" height="108%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#0F172A" flood-opacity="0.16" />
+    </filter>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1E3A8A" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+    <style>
+      .ui { font-family: 'Yu Gothic UI', 'Meiryo UI', 'Segoe UI', sans-serif; }
+      .mono { font-family: 'Consolas', 'BIZ UDGothic', 'MS Gothic', monospace; }
+      .grp-box { fill: #F8FAFC; stroke: #CBD5E1; stroke-width: 1.2; rx: 4; }
+      .grp-lbl { font-family: 'Yu Gothic UI', 'Meiryo UI', sans-serif; font-size: 11px; font-weight: 700; fill: #1E293B; }
+      .input-box { fill: #FFFFFF; stroke: #94A3B8; stroke-width: 1; rx: 3; }
+      .input-hi { fill: #EFF6FF; stroke: #2563EB; stroke-width: 1.3; rx: 3; }
+      .btn-box { fill: #FFFFFF; stroke: #94A3B8; stroke-width: 1; rx: 4; }
+      .btn-pri { fill: #2563EB; stroke: #1D4ED8; stroke-width: 1; rx: 4; }
+      .callout-box { fill: #FFFBEB; stroke: #F59E0B; stroke-width: 1.3; rx: 6; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="980" height="530" fill="#F8FAFC" rx="10" />
+
+  <!-- 左ウィンドウ: Modbus RTU タブ -->
+  <g transform="translate(22, 20)" filter="url(#winShadow)">
+    <rect x="0" y="0" width="448" height="430" rx="6" fill="#F3F4F6" stroke="#94A3B8" stroke-width="1.4" />
+    <path d="M 0 6 Q 0 0 6 0 L 442 0 Q 448 0 448 6 L 448 30 L 0 30 Z" fill="url(#titleGrad)" />
+    <text x="14" y="20" class="ui" font-size="12" font-weight="700" fill="#FFFFFF">通信ポートのプロパティ — [Modbus RTU]</text>
+
+    <path d="M 12 62 L 12 42 Q 12 38 16 38 L 96 38 Q 100 38 100 42 L 100 62 Z" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="1" />
+    <text x="56" y="53" class="ui" font-size="11" fill="#475569" text-anchor="middle">コマンド集</text>
+    <path d="M 102 62 L 102 40 Q 102 36 106 36 L 200 36 Q 204 36 204 40 L 204 62 Z" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" />
+    <text x="153" y="53" class="ui" font-size="11" font-weight="700" fill="#1D4ED8" text-anchor="middle">Modbus RTU</text>
+    <path d="M 206 62 L 206 42 Q 206 38 210 38 L 304 38 Q 308 38 308 42 L 308 62 Z" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="1" />
+    <text x="257" y="53" class="ui" font-size="11" fill="#475569" text-anchor="middle">Modbus TCP</text>
+
+    <rect x="12" y="61" width="424" height="320" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" />
+    <line x1="103" y1="61" x2="203" y2="61" stroke="#FFFFFF" stroke-width="2" />
+
+    <!-- 左ペイン: 登録CH (32点) -->
+    <rect x="22" y="76" width="112" height="292" class="grp-box" />
+    <rect x="30" y="68" width="84" height="16" fill="#FFFFFF" />
+    <text x="34" y="80" class="grp-lbl">登録CH (32点)</text>
+    <rect x="30" y="90" width="96" height="236" class="input-box" />
+    <rect x="31" y="91" width="94" height="22" fill="#DBEAFE" />
+    <text x="38" y="106" class="mono" font-size="11" font-weight="700" fill="#1E3A8A">CH01: COM1</text>
+    <text x="38" y="128" class="mono" font-size="11" fill="#475569">CH02: COM2</text>
+    <text x="38" y="148" class="mono" font-size="11" fill="#475569">CH03: COM3</text>
+    <text x="38" y="168" class="mono" font-size="11" fill="#94A3B8">... CH32</text>
+    <rect x="30" y="334" width="96" height="26" class="btn-box" />
+    <text x="78" y="351" class="ui" font-size="11" font-weight="600" fill="#1D4ED8" text-anchor="middle">全CHへ複製</text>
+
+    <!-- 右ペイン1: シリアル通信設定 -->
+    <rect x="144" y="76" width="282" height="114" class="grp-box" />
+    <rect x="152" y="68" width="102" height="16" fill="#FFFFFF" />
+    <text x="156" y="80" class="grp-lbl">シリアル通信設定</text>
+    <text x="154" y="103" class="ui" font-size="10.5" fill="#334155">ポート:</text>
+    <rect x="200" y="88" width="150" height="22" class="input-hi" />
+    <text x="208" y="103" class="mono" font-size="11" font-weight="700" fill="#1E3A8A">COM10 (c2c)</text>
+    <rect x="356" y="88" width="60" height="22" class="btn-box" />
+    <text x="386" y="103" class="ui" font-size="10.5" fill="#1E293B" text-anchor="middle">更新</text>
+
+    <text x="154" y="133" class="ui" font-size="10.5" fill="#334155">ボーレート:</text>
+    <rect x="216" y="118" width="76" height="22" class="input-box" />
+    <text x="224" y="133" class="mono" font-size="11" fill="#0F172A">9600</text>
+    <text x="302" y="133" class="ui" font-size="10.5" fill="#334155">データ:</text>
+    <rect x="346" y="118" width="70" height="22" class="input-box" />
+    <text x="354" y="133" class="mono" font-size="11" fill="#0F172A">8</text>
+
+    <text x="154" y="163" class="ui" font-size="10.5" fill="#334155">パリティ:</text>
+    <rect x="216" y="148" width="76" height="22" class="input-box" />
+    <text x="224" y="163" class="mono" font-size="11" fill="#0F172A">None</text>
+    <text x="302" y="163" class="ui" font-size="10.5" fill="#334155">ストップ:</text>
+    <rect x="346" y="148" width="70" height="22" class="input-box" />
+    <text x="354" y="163" class="mono" font-size="11" fill="#0F172A">1</text>
+
+    <!-- 右ペイン2: 制御信号・タイムアウト設定 -->
+    <rect x="144" y="200" width="282" height="104" class="grp-box" />
+    <rect x="152" y="192" width="144" height="16" fill="#FFFFFF" />
+    <text x="156" y="204" class="grp-lbl">制御信号・タイムアウト設定</text>
+    <rect x="154" y="216" width="13" height="13" rx="2" fill="#2563EB" />
+    <text x="172" y="227" class="ui" font-size="10.5" fill="#1E293B">DTR 信号有効</text>
+    <rect x="278" y="216" width="13" height="13" rx="2" fill="#2563EB" />
+    <text x="296" y="227" class="ui" font-size="10.5" fill="#1E293B">RTS 信号有効</text>
+
+    <text x="154" y="256" class="ui" font-size="10.5" fill="#334155">受信TO(ms):</text>
+    <rect x="224" y="241" width="60" height="22" class="input-box" />
+    <text x="232" y="256" class="mono" font-size="11" fill="#0F172A">1000</text>
+    <text x="294" y="256" class="ui" font-size="10.5" fill="#334155">送信TO:</text>
+    <rect x="346" y="241" width="70" height="22" class="input-box" />
+    <text x="354" y="256" class="mono" font-size="11" fill="#0F172A">1000</text>
+
+    <text x="154" y="286" class="ui" font-size="10.5" fill="#334155">リトライ回数:</text>
+    <rect x="224" y="271" width="60" height="22" class="input-box" />
+    <text x="232" y="286" class="mono" font-size="11" fill="#0F172A">3</text>
+    <text x="294" y="286" class="ui" font-size="10.5" fill="#334155">スレーブ:</text>
+    <rect x="346" y="271" width="70" height="22" class="input-box" />
+    <text x="354" y="286" class="mono" font-size="11" fill="#0F172A">1</text>
+
+    <!-- 右ペイン3: 設定概要 -->
+    <rect x="144" y="314" width="282" height="54" class="grp-box" />
+    <rect x="152" y="306" width="128" height="16" fill="#FFFFFF" />
+    <text x="156" y="318" class="grp-lbl">Modbus RTU 設定概要</text>
+    <text x="154" y="338" class="ui" font-size="10" fill="#475569">対象: CH 01</text>
+    <text x="154" y="356" class="mono" font-size="11" font-weight="700" fill="#1E3A8A">COM10:9600,N,8,1  [Slave: 1]</text>
+
+    <rect x="122" y="390" width="96" height="30" class="btn-pri" />
+    <text x="170" y="409" class="ui" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">OK</text>
+    <rect x="234" y="390" width="96" height="30" class="btn-box" />
+    <text x="282" y="409" class="ui" font-size="12" font-weight="600" fill="#1E293B" text-anchor="middle">キャンセル</text>
+  </g>
+
+  <!-- 右ウィンドウ: Modbus TCP タブ -->
+  <g transform="translate(510, 20)" filter="url(#winShadow)">
+    <rect x="0" y="0" width="448" height="430" rx="6" fill="#F3F4F6" stroke="#94A3B8" stroke-width="1.4" />
+    <path d="M 0 6 Q 0 0 6 0 L 442 0 Q 448 0 448 6 L 448 30 L 0 30 Z" fill="url(#titleGrad)" />
+    <text x="14" y="20" class="ui" font-size="12" font-weight="700" fill="#FFFFFF">通信ポートのプロパティ — [Modbus TCP]</text>
+
+    <path d="M 12 62 L 12 42 Q 12 38 16 38 L 96 38 Q 100 38 100 42 L 100 62 Z" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="1" />
+    <text x="56" y="53" class="ui" font-size="11" fill="#475569" text-anchor="middle">コマンド集</text>
+    <path d="M 102 62 L 102 42 Q 102 38 106 38 L 200 38 Q 204 38 204 42 L 204 62 Z" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="1" />
+    <text x="153" y="53" class="ui" font-size="11" fill="#475569" text-anchor="middle">Modbus RTU</text>
+    <path d="M 206 62 L 206 40 Q 206 36 210 36 L 304 36 Q 308 36 308 40 L 308 62 Z" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" />
+    <text x="257" y="53" class="ui" font-size="11" font-weight="700" fill="#1D4ED8" text-anchor="middle">Modbus TCP</text>
+
+    <rect x="12" y="61" width="424" height="320" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" />
+    <line x1="207" y1="61" x2="307" y2="61" stroke="#FFFFFF" stroke-width="2" />
+
+    <!-- 左ペイン: 登録CH (32点) -->
+    <rect x="22" y="76" width="112" height="292" class="grp-box" />
+    <rect x="30" y="68" width="84" height="16" fill="#FFFFFF" />
+    <text x="34" y="80" class="grp-lbl">登録CH (32点)</text>
+    <rect x="30" y="90" width="96" height="236" class="input-box" />
+    <rect x="31" y="91" width="94" height="22" fill="#DBEAFE" />
+    <text x="36" y="106" class="mono" font-size="10.5" font-weight="700" fill="#1E3A8A">CH01:127.0.0.1</text>
+    <text x="36" y="128" class="mono" font-size="10.5" fill="#475569">CH02:192.168..</text>
+    <text x="36" y="148" class="mono" font-size="10.5" fill="#94A3B8">... CH32</text>
+    <rect x="30" y="334" width="96" height="26" class="btn-box" />
+    <text x="78" y="351" class="ui" font-size="11" font-weight="600" fill="#1D4ED8" text-anchor="middle">全CHへ複製</text>
+
+    <!-- 右ペイン1: TCP/IP ソケット接続設定 -->
+    <rect x="144" y="76" width="282" height="126" class="grp-box" />
+    <rect x="152" y="68" width="144" height="16" fill="#FFFFFF" />
+    <text x="156" y="80" class="grp-lbl">TCP/IP ソケット接続設定</text>
+    <text x="154" y="105" class="ui" font-size="10.5" fill="#334155">ホスト/IP:</text>
+    <rect x="216" y="89" width="200" height="24" class="input-hi" />
+    <text x="224" y="105" class="mono" font-size="11.5" font-weight="700" fill="#1E3A8A">127.0.0.1</text>
+
+    <text x="154" y="139" class="ui" font-size="10.5" fill="#334155">ポート:</text>
+    <rect x="216" y="123" width="96" height="24" class="input-box" />
+    <text x="224" y="139" class="mono" font-size="11.5" fill="#0F172A">502</text>
+    <rect x="320" y="123" width="96" height="24" class="btn-box" />
+    <text x="368" y="139" class="ui" font-size="10.5" font-weight="600" fill="#1E293B" text-anchor="middle">標準 (502)</text>
+
+    <text x="154" y="174" class="ui" font-size="10.5" fill="#334155">Unit ID:</text>
+    <rect x="216" y="158" width="60" height="24" class="input-box" />
+    <text x="224" y="174" class="mono" font-size="11.5" fill="#0F172A">1</text>
+    <rect x="292" y="163" width="13" height="13" rx="2" fill="#2563EB" />
+    <text x="310" y="174" class="ui" font-size="10.5" fill="#1E293B">KeepAlive 有効</text>
+
+    <!-- 右ペイン2: タイムアウト設定 -->
+    <rect x="144" y="212" width="282" height="92" class="grp-box" />
+    <rect x="152" y="204" width="102" height="16" fill="#FFFFFF" />
+    <text x="156" y="216" class="grp-lbl">タイムアウト設定</text>
+    <text x="154" y="242" class="ui" font-size="10.5" fill="#334155">接続TO(ms):</text>
+    <rect x="224" y="227" width="64" height="22" class="input-box" />
+    <text x="232" y="242" class="mono" font-size="11" fill="#0F172A">3000</text>
+    <text x="296" y="242" class="ui" font-size="10.5" fill="#334155">受信TO:</text>
+    <rect x="348" y="227" width="68" height="22" class="input-box" />
+    <text x="356" y="242" class="mono" font-size="11" fill="#0F172A">3000</text>
+
+    <text x="154" y="274" class="ui" font-size="10.5" fill="#334155">送信TO(ms):</text>
+    <rect x="224" y="259" width="64" height="22" class="input-box" />
+    <text x="232" y="274" class="mono" font-size="11" fill="#0F172A">3000</text>
+    <text x="296" y="274" class="ui" font-size="10.5" fill="#334155">リトライ:</text>
+    <rect x="348" y="259" width="68" height="22" class="input-box" />
+    <text x="356" y="274" class="mono" font-size="11" fill="#0F172A">3</text>
+
+    <!-- 右ペイン3: 設定概要 -->
+    <rect x="144" y="314" width="282" height="54" class="grp-box" />
+    <rect x="152" y="306" width="128" height="16" fill="#FFFFFF" />
+    <text x="156" y="318" class="grp-lbl">Modbus TCP 設定概要</text>
+    <text x="154" y="338" class="ui" font-size="10" fill="#475569">対象: CH 01</text>
+    <text x="154" y="356" class="mono" font-size="11" font-weight="700" fill="#1E3A8A">127.0.0.1:502  [Unit: 1]</text>
+
+    <rect x="122" y="390" width="96" height="30" class="btn-pri" />
+    <text x="170" y="409" class="ui" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">OK</text>
+    <rect x="234" y="390" width="96" height="30" class="btn-box" />
+    <text x="282" y="409" class="ui" font-size="12" font-weight="600" fill="#1E293B" text-anchor="middle">キャンセル</text>
+  </g>
+
+  <rect x="22" y="466" width="936" height="48" class="callout-box" />
+  <text x="40" y="486" class="ui" font-size="11" font-weight="700" fill="#92400E">MODBUS モード選択時は［Modbus RTU］と［Modbus TCP］の 2 タブが同時表示（最大 32 チャネル個別管理）</text>
+  <text x="40" y="504" class="ui" font-size="10.5" fill="#451A03">・左ペイン「全CHへ複製」で共通設定を全 32 CH へ一括コピー後、各 CH のポート／IP やスレーブ／Unit ID だけ個別調整できます。</text>
+</svg>
